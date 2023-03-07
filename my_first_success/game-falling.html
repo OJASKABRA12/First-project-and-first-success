@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Catch the Falling Object</title>
+    <style>
+      /* Style for the falling object */
+      #object {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 50px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Catch the Falling Object</h1>
+    <p>Move your mouse to catch the falling object!</p>
+    <div id="object">.</div>
+    
+    <script>
+      // Get a reference to the object
+      var object = document.getElementById("object");
+      
+      // Set the object's initial position
+      var objectX = Math.random() * (window.innerWidth - object.offsetWidth);
+      object.style.top = "0px";
+      object.style.left = objectX + "px";
+      
+      // Set up the game loop
+      var score = 0;
+      var speed = 5;
+      setInterval(function() {
+        // Move the object down
+        var objectY = parseInt(object.style.top) + speed;
+        object.style.top = objectY + "px";
+        
+        // Check if the object is off the screen
+        if (objectY > window.innerHeight) {
+          // Object is off the screen, reset its position and increment the score
+          objectX = Math.random() * (window.innerWidth - object.offsetWidth);
+          object.style.top = "0px";
+          object.style.left = objectX + "px";
+          score++;
+          speed++;
+        }
+      }, 20);
+      
+      // Add an event listener for the mousemove event
+      document.addEventListener("mousemove", function(event) {
+        // Move the object left or right based on the mouse position
+        var objectX = event.clientX - object.offsetWidth / 2;
+        object.style.left = objectX + "px";
+      });
+      
+      // Display the score
+      setInterval(function() {
+        document.title = "Score: " + score;
+      }, 100);
+    </script>
+  </body>
+</html>

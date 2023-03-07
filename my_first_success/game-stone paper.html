@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rock Paper Scissors</title>
+	<style type="text/css">
+		body {
+  background-image: url("img/hi6.jpg");
+  background-size: cover;
+  color: red;
+	</style>
+</head>
+<body>
+	<h1>Rock Paper Scissors</h1>
+	<p>Choose your weapon:</p>
+	<button onclick="play('rock')">Rock</button>
+	<button onclick="play('paper')">Paper</button>
+	<button onclick="play('scissors')">Scissors</button>
+	<p id="result"></p>
+	<script>
+		function play(user_choice) {
+			var options = ["rock", "paper", "scissors"];
+			var computer_choice = options[Math.floor(Math.random() * 3)];
+			var result = "";
+			if (user_choice == computer_choice) {
+				result = "It's a tie!";
+			} else if (user_choice == "rock" && computer_choice == "scissors" ||
+					   user_choice == "paper" && computer_choice == "rock" ||
+					   user_choice == "scissors" && computer_choice == "paper") {
+				result = "You win!";
+			} else {
+				result = "The computer wins!";
+			}
+			document.getElementById("result").innerHTML = "You chose " + user_choice + ", the computer chose " + computer_choice + ". " + result;
+		}
+	</script>
+</body>
+</html>
