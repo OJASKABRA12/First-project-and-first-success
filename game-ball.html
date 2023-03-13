@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simple Game</title>
+	<style>
+		canvas {
+			border: 1px solid black;
+		}
+	</style>
+</head>
+<body>
+	<canvas id=" game canvas" width="500" height="500"></canvas>
+
+	<script>
+		// Initialize canvas and variables
+		var canvas = document.getElementById("game canvas");
+		var ctx = canvas.getContext("2d");
+		var x = canvas.width/2;
+		var y = canvas.height-30;
+		var ballRadius = 10;
+		var dx = 2;
+		var dy = -2;
+		var paddle height = 10;
+		var paddleWidth = 75;
+		var paddles = (canvas.width-paddleWidth)/2;
+		var right pressed = false;
+		var left pressed = false;
+
+		// Draw the ball
+		function drawBall() {
+			ctx.beginPath();
+			ctx. arc(x, y, ball radius, 0, Math.PI*2);
+			ctx.fillStyle = "#0095DD";
+			ctx. fill();
+			ctx.closePath();
+		}
+
+		// Draw paddle
+		function drawPaddle() {
+			ctx.beginPath();
+			ctx. Rect(paddles, canvas. height-paddle height, paddle width, paddle height);
+			ctx.fillStyle = "#0095DD";
+			ctx. fill();
+			ctx.closePath();
+		}
+
+		// Check if the ball hits the wall or paddle
+		function collision-detection() {
+			if(x + dx > canvas.width-ballRadius || x + dx < ball radius) {
+				dx = -dx;
+			}
+			if(y + dy < ball radius) {
+				dy = -dy;
+			} else if(y + dy > canvas. height-ball radius) {
+				if(x > paddles && x < paddles + paddleWidth) {
+					dy = -dy;
+				}
+				else {
+					alert("Game Over");
+					document.location.reload();
+					clear interval(interval); // Needed for Chrome to end game
+				}
+			}
+		}
+
+		// Handle user input
+		function keyDownHandler(e) {
+			if(e.keyCode == 39) {
+				right pressed = true;
+			}
+			else if(e.keyCode == 37) {
+				left pressed = true;
+			}
+		}
+		function keyUpHandler(e) {
+			if(e.keyCode == 39) {
+				right pressed = false;
+			}
+			else if(e.keyCode == 37) {
+				left pressed = false;
+			}
+		}
+
+		// Update game state
+		function update() {
+			ctx.clearRect(0, 0, canvas. width, canvas. height); // Clear canvas
+			draw all(); // Draw the ball
+			drawPaddle(); // Draw paddle
+			collision-detection(); // Check for collisions
+
+			// Move the paddle
+			if(right pressed && paddles < canvas.width-paddleWidth) {
+				paddles += 7;
+			}
+			else if(left pressed && paddles > 0) {
+				paddles -= 7;
+			}
+
+			// Move the ball
+			x += dx;
+			y += dy;
+		}
+
+		// Start game loop
+		var interval = setInterval(update, 10);
+
+		// Handle user input
+		document.addEventListener("keydown", key down handler, false);
+		document.addEventListener("key up", keyUpHandler, false);
+	</script>
+</body>
+</html>
